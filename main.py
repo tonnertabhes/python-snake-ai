@@ -164,60 +164,40 @@ def draw_menu():
 
 def select_difficulty(e):
     global menu
-    global difficulty
-    global game_over
-    global snake_pos
-    global direction
-    global score
-    global food_pos
     if menu == True:
         if e.keysym == "1":
             difficulty = 90
-            menu = False
-            game_over = False
-            snake_pos = [[250, 250]]
-            food_pos = [randint(1, 49) * 10, randint(1, 49) * 10]
-            direction = "DOWN"
-            score = 0
-            time.sleep(0.05)
-            canvas.delete("menu")
-            canvas.delete("gameover")
-            draw_food()
-            draw_score()
-            draw_high_score()
-            update()
+            reset()
         if e.keysym == "2":
             difficulty = 60
-            menu = False
-            game_over = False
-            snake_pos = [[250, 250]]
-            food_pos = [randint(1, 49) * 10, randint(1, 49) * 10]
-            direction = "DOWN"
-            score = 0
-            time.sleep(0.05)
-            canvas.delete("menu")
-            canvas.delete("gameover")
-            draw_food()
-            draw_score()
-            draw_high_score()
-            update()
+            reset()
             return
         if e.keysym == "3":
             difficulty = 30
-            menu = False
-            game_over = False
-            snake_pos = [[250, 250]]
-            food_pos = [randint(1, 49) * 10, randint(1, 49) * 10]
-            direction = "DOWN"
-            score = 0
-            time.sleep(0.05)
-            canvas.delete("menu")
-            canvas.delete("gameover")
-            draw_food()
-            draw_score()
-            draw_high_score()
-            update()
+            reset()
             return
+            
+def reset():
+    global menu
+    global game_over
+    global snake_pos
+    global food_pos
+    global direction
+    global score
+    
+    menu = False
+    game_over = False
+    snake_pos = [[250, 250]]
+    food_pos = [randint(1, 49) * 10, randint(1, 49) * 10]
+    direction = "DOWN"
+    score = 0
+    time.sleep(0.05)
+    canvas.delete("menu")
+    canvas.delete("gameover")
+    draw_food()
+    draw_score()
+    draw_high_score()
+    update()
             
 
 def update():
