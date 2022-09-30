@@ -207,19 +207,24 @@ def reset():
 def update():
     global game_over
 
+    #Checking state of game
     if menu == True:
         draw_menu()
         return
     if game_over == True:
         draw_game_over()
         return
+    
+    #Checking to see if snake is within game boundaries
     if snake_pos[0][0] >= 500 or snake_pos[0][0] <= 0:
         game_over = True
     if snake_pos[0][1] >= 500 or snake_pos[0][1] <= 0:
         game_over = True
+        
+    #Updating frame
     draw_snake()
     move_snake()
-    window.after(difficulty, update())
+    window.after(difficulty, update)
 
 window.bind("<Up>", key_pressed)
 window.bind("<Down>", key_pressed)
