@@ -177,6 +177,11 @@ def select_difficulty(e):
             reset()
             return
             
+def draw_game_over():
+    canvas.create_text(250, 250, fill="#FFF", text="GAME OVER", width=500, font=("Arial", 25), tags="gameover")
+    canvas.create_text(250, 280, fill="#FFF", text="Press Enter to play again.", tags="gameover")
+    canvas.create_text(250, 300, fill="#FFF", text="Press Esc to change difficulty.", tags="gameover")
+            
 def reset():
     global menu
     global game_over
@@ -199,26 +204,6 @@ def reset():
     draw_high_score()
     update()
             
-
-def update():
-    global game_over
-    if menu == True:
-        draw_menu()
-        return
-    if game_over == True:
-        canvas.create_text(250, 250, fill="#FFF", text="GAME OVER", width=500, font=("Arial", 25), tags="gameover")
-        canvas.create_text(250, 280, fill="#FFF", text="Press Enter to play again.", tags="gameover")
-        canvas.create_text(250, 300, fill="#FFF", text="Press Esc to change difficulty.", tags="gameover")
-        return
-    if snake_pos[0][0] >= 500 or snake_pos[0][0] <= 0:
-        game_over = True
-    if snake_pos[0][1] >= 500 or snake_pos[0][1] <= 0:
-        game_over = True
-    draw_snake()
-    move_snake()
-    window.after(difficulty, update)
-    
-
 window.bind("<Up>", key_pressed)
 window.bind("<Down>", key_pressed)
 window.bind("<Left>", key_pressed)
@@ -228,6 +213,24 @@ window.bind("<Escape>", key_pressed)
 window.bind(1, select_difficulty)
 window.bind(2, select_difficulty)
 window.bind(3, select_difficulty)
+
+def update():
+    global game_over
+
+    if menu == True:
+        draw_menu()
+        return
+    if game_over == True:
+        draw_game_over()
+        return
+    if snake_pos[0][0] >= 500 or snake_pos[0][0] <= 0:
+        game_over = True
+    if snake_pos[0][1] >= 500 or snake_pos[0][1] <= 0:
+        game_over = True
+    draw_snake()
+    move_snake()
+    window.after(difficulty, update)
+
 
 draw_score()
 draw_high_score()
