@@ -52,7 +52,6 @@ def key_pressed(e):
         
     if e.keysym == "Down" and direction != "UP":
         direction = "DOWN"
-        time.sleep(difficulty/1000)
         return direction
         
     if e.keysym == "Left" and direction != "RIGHT":
@@ -164,6 +163,7 @@ def draw_menu():
 
 def select_difficulty(e):
     global menu
+    global difficulty
     if menu == True:
         if e.keysym == "1":
             difficulty = 90
