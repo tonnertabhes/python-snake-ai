@@ -35,7 +35,7 @@ def key_pressed(e):
     
     if e.keysym == "Return" and game_over == True:
         snake_pos = [[250, 250]]
-        food_pos = [randint(1, 49) * 10, randint(1, 49) * 10]
+        new_food_pos()
         direction = "DOWN"
         score = 0
         game_over = False
@@ -117,11 +117,19 @@ def move_snake():
             snake_pos = newpos
             return snake_pos
         game_over = True
-        
 
 def draw_food():
     canvas.delete("food")
     canvas.create_rectangle(food_pos[0], food_pos[1], food_pos[0] - 10, food_pos[1] - 10, fill="purple", tags="food")
+
+def new_food_pos():
+    global food_pos
+    
+    if food_pos in snake_pos:
+        while food_pos in snake_pos:
+            food_pos = [randint(1, 49) * 10, randint(1, 49) * 10]
+        return
+    food_pos = [randint(1, 49) * 10, randint(1, 49) * 10]
 
 def draw_snake():
     global food_pos
@@ -131,7 +139,7 @@ def draw_snake():
     
     canvas.delete("snake")
     if snake_pos[0] == food_pos:
-        food_pos = [randint(1, 49) * 10, randint(1, 49) * 10]
+        new_food_pos()
         score += 1
         draw_score()
         if score >= high_score:
@@ -161,6 +169,11 @@ def draw_menu():
     canvas.create_text(250, 190, font=("Arial", 10), text="Select Difficulty (Use Number Keys)", fill="#FFF", tags='menu')
     canvas.create_text(250, 250, font=("Arial", 10), text="1 - Easy\n2 - Medium\n3 - Hard", fill="#FFF", tags='menu')
 
+def draw_game_over():
+    canvas.create_text(250, 250, fill="#FFF", text="GAME OVER", width=500, font=("Arial", 25), tags="gameover")
+    canvas.create_text(250, 280, fill="#FFF", text="Press Enter to play again.", tags="gameover")
+    canvas.create_text(250, 300, fill="#FFF", text="Press Esc to change difficulty.", tags="gameover")
+    
 def select_difficulty(e):
     global menu
     global difficulty
@@ -176,11 +189,6 @@ def select_difficulty(e):
             difficulty = 30
             reset()
             return
-            
-def draw_game_over():
-    canvas.create_text(250, 250, fill="#FFF", text="GAME OVER", width=500, font=("Arial", 25), tags="gameover")
-    canvas.create_text(250, 280, fill="#FFF", text="Press Enter to play again.", tags="gameover")
-    canvas.create_text(250, 300, fill="#FFF", text="Press Esc to change difficulty.", tags="gameover")
             
 def reset():
     global menu
@@ -220,7 +228,7 @@ def update():
         game_over = True
     if snake_pos[0][1] >= 500 or snake_pos[0][1] <= 0:
         game_over = True
-        
+
     #Updating frame
     draw_snake()
     move_snake()
