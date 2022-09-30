@@ -1,4 +1,3 @@
-from ast import Delete
 from tkinter import *
 from random import randint
 import time
@@ -61,6 +60,7 @@ def key_pressed(e):
     if e.keysym == "Right" and direction != "LEFT":
         direction = "RIGHT"
         return direction
+
 
 def move_snake():
     global snake_pos
@@ -202,17 +202,7 @@ def reset():
     draw_food()
     draw_score()
     draw_high_score()
-    update()
-            
-window.bind("<Up>", key_pressed)
-window.bind("<Down>", key_pressed)
-window.bind("<Left>", key_pressed)
-window.bind("<Right>", key_pressed)
-window.bind("<Return>", key_pressed)
-window.bind("<Escape>", key_pressed)
-window.bind(1, select_difficulty)
-window.bind(2, select_difficulty)
-window.bind(3, select_difficulty)
+    update()  
 
 def update():
     global game_over
@@ -229,11 +219,21 @@ def update():
         game_over = True
     draw_snake()
     move_snake()
-    window.after(difficulty, update)
+    window.after(difficulty, update())
 
+window.bind("<Up>", key_pressed)
+window.bind("<Down>", key_pressed)
+window.bind("<Left>", key_pressed)
+window.bind("<Right>", key_pressed)
+window.bind("<Return>", key_pressed)
+window.bind("<Escape>", key_pressed)
+window.bind(1, select_difficulty)
+window.bind(2, select_difficulty)
+window.bind(3, select_difficulty)
 
 draw_score()
 draw_high_score()
 draw_food()
 window.after(difficulty, update())
 window.mainloop()
+
